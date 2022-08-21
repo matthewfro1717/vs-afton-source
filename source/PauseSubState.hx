@@ -19,7 +19,7 @@ class PauseSubState extends MusicBeatSubstate
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
 	var menuItems:Array<String> = [];
-	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Exit to menu'];
+	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Toggle Practice Mode', 'Botplay', 'Exit to menu'];
 	var difficultyChoices = [];
 	var curSelected:Int = 0;
 
@@ -159,23 +159,31 @@ class PauseSubState extends MusicBeatSubstate
 			{
 				case "Resume":
 					close();
+				case 'Change Difficulty':
+					menuItems = difficultyChoices;
+					regenMenu();
+				case 'Toggle Practice Mode':
+					PlayState.practiceMode = !PlayState.practiceMode;
+					PlayState.usedPractice = true;
+					practiceText.visible = PlayState.practiceMode;
 				case "Restart Song":
 					CustomFadeTransition.nextCamera = transCamera;
 					MusicBeatState.resetState();
 					FlxG.sound.music.volume = 0;
+				case 'Botplay':
+					PlayState.cpuControlled = !PlayState.cpuControlled;
+					PlayState.usedPractice = true;
+					botplayText.visible = PlayState.cpuControlled;
 				case "Exit to menu":
 					PlayState.deathCounter = 0;
 					PlayState.seenCutscene = false;
 					CustomFadeTransition.nextCamera = transCamera;
 					if(PlayState.isStoryMode) {
-						if(FlxG.save.data.weekCompleted != null)
-							MusicBeatState.switchState(new AftonMenuState());
-						else
-							MusicBeatState.switchState(new MainMenuState());
+						MusicBeatState.switchState(new StoryMenuState());
 					} else {
-						MusicBeatState.switchState(new AftonMenuState());
+						MusicBeatState.switchState(new FreeplayState());
 					}
-					FlxG.sound.playMusic(Paths.music('aftonMenu'));
+					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 					PlayState.usedPractice = false;
 					PlayState.changedDifficulty = false;
 					PlayState.cpuControlled = false;
