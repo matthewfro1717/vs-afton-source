@@ -44,6 +44,15 @@
 				225,
 				250
 			]
+		],
+		[
+                        "consequences",
+			"omc",
+			[
+				0,
+				0,
+				0
+			]
 		]
 	],
 	"hideFreeplay": false,
