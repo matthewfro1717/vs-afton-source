@@ -2827,33 +2827,7 @@ class PlayState extends MusicBeatState
 
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
 		{
-			if(curStage == 'scott'){
-				FlxG.sound.play(Paths.sound('noPause'));
-
-				var scottPauseSpr:FlxSprite = new FlxSprite(500,-240).loadGraphic(Paths.image('backgrounds/scott/Scott_Cawthon'));
-				scottPauseSpr.antialiasing = true;
-				scottPauseSpr.setGraphicSize(Std.int(scottPauseSpr.width * 0.3));
-				add(scottPauseSpr);
-				scottPauseSpr.cameras = [camHUD];
-				scottPauseSpr.alpha = 0;
-
-				var noPauseButt:FlxSprite = new FlxSprite(400,360).loadGraphic(Paths.image('backgrounds/scott/nopause'));
-				noPauseButt.antialiasing = false;
-				noPauseButt.setGraphicSize(Std.int(noPauseButt.width * 1));
-				add(noPauseButt);
-				noPauseButt.screenCenter(X);
-				noPauseButt.x -= 40;
-				noPauseButt.cameras = [camHUD];
-				noPauseButt.alpha = 0;
-
-				FlxTween.tween(scottPauseSpr, {alpha: 1}, 0.2);
-				FlxTween.tween(noPauseButt, {alpha: 1}, 0.2);
-				new FlxTimer().start(2, function(tmr:FlxTimer){
-					FlxTween.tween(scottPauseSpr, {alpha: 0}, 0.2);
-					FlxTween.tween(noPauseButt, {alpha: 0}, 0.2);
-				});
-			}
-			else{
+			{
 				var ret:Dynamic = callOnLuas('onPause', []);
 				if(ret != FunkinLua.Function_Stop) {
 					persistentUpdate = false;
